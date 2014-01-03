@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BikeMap using Leaflet API by JackDougherty</title>
+	<title>BikeMap with Leaflet API by JackDougherty</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
@@ -16,15 +16,15 @@
 			ocmAttr = 'Map data &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a> and <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 			osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-			cmUrl = 'http://{s}.tile.cloudmade.com/4242e1a028a4443d9e927f3dc1265ede/{styleId}/256/{z}/{x}/{y}.png',
-			cmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>';
+			cmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',;
 
-	    var ocm   = L.tileLayer(ocmUrl, {attribution: ocmAttr}),
-	    	osm   = L.tileLayer(osmUrl, {attribution: osmAttr}),
+	    var ocm   = L.tileLayer(OpenCycleUrl, {attribution: OpenCycleAttr}),
 	    	minimal   = L.tileLayer(cmUrl, {styleID: 22677, attribution: cmAttr}),
 	    	midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr}),
-	    	motorways = L.tileLayer(cmUrl, {styleId: 46561, attribution: cmAttr});
-
+		    motorways = L.tileLayer(cmUrl, {styleId: 46561, attribution: cmAttr}),
+	    	cyclinghighcontrast   = L.tileLayer(cmUrl, {styleID: 117927, attribution: cmAttr}),
+	    	cyclingwalking   = L.tileLayer(cmUrl, {styleID: 117923, attribution: cmAttr}),
+	    	RTCcyclepath   = L.tileLayer(cmUrl, {styleID: 117929, attribution: cmAttr});
 
 		 var map = L.map('map', {
 			center: [41.75, -72.70],
@@ -33,13 +33,15 @@
 		});
 
 	    var baseLayers = {
-	    	"OpenCycleMap": ocm,
-	    	"OpenStreetMap": osm,
-	    	"Night View": midnight
+	    	"OpenCycleMap": OCM,
+	    	"Minimal": minimal,
+	    	"Night View": midnight,
+	    	"Cycling high contrast": cyclinghighcontrast,
+	    	"Cycling walking": cyclingwalking,
+	    	"RTC Cyclepath": RTCcyclepath
 	    };
 
 	    var overlays = {
-			"Minimal": minimal,
 	    	"Motorways": motorways
 	    };
 
