@@ -1,65 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>BikeMap with OSM, Leaflet, Flickr by JackDougherty</title>
+	<title>BikeMap using Leaflet API by JackDougherty</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
 	<!-- Option to load leafletjs directly from GitHub? -->
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
-	<style>
-		body {
-			padding: 0;
-			margin: 0;
-		}
-		html, body, #map {
-			height: 100%;
-		}
-	</style>
 </head>
 <body>
-	<div id="map"></div>
+	<div id="map" style="width: 600px; height: 600px"></div>
 	<script>
-		var map = L.map('map');
 
-		L.tileLayer('http://{s}.tile.cloudmade.com/4242e1a028a4443d9e927f3dc1265ede/117923/256/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
+		var ocmUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+			ocmAttr = 'Map data &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a> and <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+			osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+			cmUrl = 'http://{s}.tile.cloudmade.com/4242e1a028a4443d9e927f3dc1265ede/{styleId}/256/{z}/{x}/{y}.png',
+			cmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>';
 
-		function onLocationFound(e) {
-			var radius = e.accuracy / 2;
-
-			L.marker(e.latlng).addTo(map)
-				.bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-			L.circle(e.latlng, radius).addTo(map);
-		}
-
-		function onLocationError(e) {
-			alert(e.message);
-		}
-
-		map.on('locationfound', onLocationFound);
-		map.on('locationerror', onLocationError);
-
-		map.locate({setView: true, maxZoom: 16});
+	    var ocm   = L.tileLayer(ocmUrl, {attribution: ocmAttr}),
+	    	osm   = L.tileLayer(osmUrl, {attribution: osmAttr}),
+	    	minimal   = L.tileLayer(cmUrl, {styleID: 22677, attribution: cmAttr}),
+	    	midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr}),
+	    	motorways = L.tileLayer(cmUrl, {styleId: 46561, attribution: cmAttr});
 
 
-		/*L.marker([41.7586, -72.7415]).addTo(map)
-			.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+		 var map = L.map('map', {
+			center: [41.75, -72.70],
+			zoom: 12,
+			layers: [ocm, motorways]
+		});
 
-		var popup = L.popup();*/
+	    var baseLayers = {
+	    	"OpenCycleMap": ocm,
+	    	"OpenStreetMap": osm,
+	    	"Night View": midnight
+	    };
 
-		function onMapClick(e) {
-			popup
-				.setLatLng(e.latlng)
-				.setContent("You clicked the map at " + e.latlng.toString())
-				.openOn(map);
-		}
+	    var overlays = {
+			"Minimal": minimal,
+	    	"Motorways": motorways
+	    };
 
-		map.on('click', onMapClick);
-
+		L.control.layers(baseLayers, overlays).addTo(map);
 	</script>
 </body>
 </html>
