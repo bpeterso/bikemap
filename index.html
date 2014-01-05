@@ -4,9 +4,11 @@
 	<title>BikeMap using Leaflet API by JackDougherty</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-	<!-- Option to load leafletjs directly from GitHub? -->
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+	<!-- Load other libraries -->
+	<script type="text/javascript" src="leaflet-openweathermap.js"></script>
+	<link type="text/css" rel="stylesheet" href="leaflet-openweathermap.css"/>
 </head>
 <body>
 	<div id="map" style="width: 600px; height: 600px"></div>
@@ -17,33 +19,33 @@
 			osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			osmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 			cmUrl = 'http://{s}.tile.cloudmade.com/4242e1a028a4443d9e927f3dc1265ede/{styleId}/256/{z}/{x}/{y}.png',
-			cmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>';
+            cmAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>';
 
 	    var ocm   = L.tileLayer(ocmUrl, {attribution: ocmAttr}),
 	    	osm   = L.tileLayer(osmUrl, {attribution: osmAttr}),
-	    	minimal   = L.tileLayer(cmUrl, {styleID: 22677, attribution: cmAttr}),
-	    	midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr}),
-	    	motorways = L.tileLayer(cmUrl, {styleId: 46561, attribution: cmAttr});
+			precipitation = L.OWM.precipitationClassic({showLegend: true, opacity: 0.5}),
+			current = L.OWM.current({appID: '3823237b7ab8715435053cffaf6317b2', intervall: 15, imageWidth: 25, imageHeight: 25, temperatureDigits: 0, temperatureUnit: 'F', speedUnit: 'mph'}),
+	    	midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr});
 
 
 		 var map = L.map('map', {
 			center: [41.75, -72.70],
-			zoom: 12,
-			layers: [ocm, motorways]
+			zoom: 13,
+			layers: [ocm, current]
 		});
 
-	    var baseLayers = {
+	    var baseMaps = {
 	    	"OpenCycleMap": ocm,
 	    	"OpenStreetMap": osm,
 	    	"Night View": midnight
 	    };
 
-	    var overlays = {
-			"Minimal": minimal,
-	    	"Motorways": motorways
+	    var overlayMaps = {
+	    	"Current Weather": current,
+			"Precip Forecast": precipitation
 	    };
 
-		L.control.layers(baseLayers, overlays).addTo(map);
+		L.control.layers(baseMaps, overlayMaps).addTo(map);
 	</script>
 </body>
 </html>
