@@ -3,17 +3,24 @@
 <head>
 	<title>BikeMap using Leaflet API by JackDougherty</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-	<!-- Load other libraries -->
 	<script type="text/javascript" src="leaflet-openweathermap.js"></script>
 	<link type="text/css" rel="stylesheet" href="leaflet-openweathermap.css"/>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map {
+			height: 100%;
+		}
+	</style>
 </head>
 <body>
-	<div id="map" style="width: 600px; height: 600px"></div>
+	<div id="map"></div>
 	<script>
-
 		var ocmUrl = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
 			ocmAttr = 'Map data &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a> and <a href="http://openstreetmap.org">OpenStreetMap</a> contributors <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 			osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -30,7 +37,7 @@
 
 		 var map = L.map('map', {
 			center: [41.75, -72.70],
-			zoom: 13,
+			zoom: 14,
 			layers: [ocm, current]
 		});
 
@@ -46,6 +53,22 @@
 	    };
 
 		L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+		function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+
+			L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+			L.circle(e.latlng, radius).addTo(map);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+		map.on('locationfound', onLocationFound);
+		map.on('locationerror', onLocationError);
+
+		map.locate({setView: true, maxZoom: 14});
 	</script>
 </body>
 </html>
