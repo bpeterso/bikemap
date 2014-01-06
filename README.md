@@ -1,17 +1,17 @@
 bikemap
 =======
 
-BikeMap (beta) uses Leaflet API to display map layers from OpenCycleMap (ocm), OpenStreetMap (osm), OpenWeatherMap
+BikeMap (beta) blends OpenCycleMap, OpenStreetMap, and OpenWeatherMap with Leaflet API
 
-See live demo at <a href="http://jackdougherty.github.io/bikemap/">http://jackdougherty.github.io/bikemap/</a>
+Live demo at <a href="http://jackdougherty.github.io/bikemap/">http://jackdougherty.github.io/bikemap/</a>
 
 Credits to:
+* Leaflet tutorials http://leafletjs.com/examples.html
+* Leaflet-OpenWeatherMap https://github.com/buche/leaflet-openweathermap
 
-https://github.com/buche/leaflet-openweathermap
+Working on additional features:
 
-Working on adding the following features:
-
-* wrapper with how-to links (such as adding OpenStreetMap content)
+* how-to links (to add content to OpenStreetMap)
 * geosearch
 * coordinates
 * share map link
