@@ -16,6 +16,7 @@ Working on additional features:
 * coordinates
 * share map link
 * Google cycling layer
+* possibly add SeeClickFix bike-related hazards layer? see API http://help.seeclickfix.com/kb/api/api-overview
 * Flickr geotagged photo layer
 * legend for types of cycle routes on OCM/OSM
 * GPX and KML recreational bike routes
