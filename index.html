@@ -73,6 +73,10 @@
 		map.on('locationerror', onLocationError);
 
 		map.locate({setView: true, maxZoom: 14});
+		
+		new L.Control.GeoSearch({
+    	provider: new L.GeoSearch.Provider.OpenStreetMap()
+	}).addTo(map);
 	</script>
 </body>
 </html>
