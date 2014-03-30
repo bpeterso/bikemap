@@ -73,6 +73,12 @@
 		map.on('locationerror', onLocationError);
 
 		map.locate({setView: true, maxZoom: 14});
+		
+	    var photo_marker = new L.PhotoMarker([43.077085534225475, -89.40519332885742], {
+  		src: 'http://farm8.staticflickr.com/7012/6477800239_ee93da89b9_t.jpg',
+  		size: [ 100, 67 ]
+	    }).addTo(map);
+	    
 	</script>
 </body>
 </html>
