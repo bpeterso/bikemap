@@ -89,6 +89,13 @@
         	minHeight: photo.medium_size[1]
       		});
       // Preload the images
+      
++      // Preload the images
+ +      $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
+ +    });
+ +  </script>
+ +</body>
+ +</html>
       $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
     });
 	    new L.Control.GeoSearch({
