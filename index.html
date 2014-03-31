@@ -91,9 +91,11 @@
       // Preload the images
       $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
     });
-  </script>
-</body>
-</html>
+	    new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.OpenStreetMap(),
+    position: 'topcenter',
+    showMarker: true
+}).addTo(map);
 	</script>
 </body>
 </html>
