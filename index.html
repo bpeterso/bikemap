@@ -78,7 +78,22 @@
   		src: 'http://farm8.staticflickr.com/7012/6477800239_ee93da89b9_t.jpg',
   		size: [ 100, 67 ]
 	    }).addTo(map);
-	    
+	     var photo_layer = L.layerGroup();
+    		photo_layer.addTo(map);
+    		$.each(photos, function(k, photo) {
+      		var marker = L.photoMarker(photo.latLng, {
+        	src: photo.src,
+        	size: photo.size
+		 }).bindPopup('<img src="'+photo.medium+'" /><p>'+photo.title+'</p>', {
+        	minWidth: photo.medium_size[0],
+        	minHeight: photo.medium_size[1]
+      		});
+      // Preload the images
+      $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
+    });
+  </script>
+</body>
+</html>
 	</script>
 </body>
 </html>
