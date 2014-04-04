@@ -73,36 +73,6 @@
 		map.on('locationerror', onLocationError);
 
 		map.locate({setView: true, maxZoom: 14});
-		
-	    var photo_marker = new L.PhotoMarker([43.077085534225475, -89.40519332885742], {
-  		src: 'http://farm8.staticflickr.com/7012/6477800239_ee93da89b9_t.jpg',
-  		size: [ 100, 67 ]
-	    }).addTo(map);
-	     var photo_layer = L.layerGroup();
-    		photo_layer.addTo(map);
-    		$.each(photos, function(k, photo) {
-      		var marker = L.photoMarker(photo.latLng, {
-        	src: photo.src,
-        	size: photo.size
-		 }).bindPopup('<img src="'+photo.medium+'" /><p>'+photo.title+'</p>', {
-        	minWidth: photo.medium_size[0],
-        	minHeight: photo.medium_size[1]
-      		});
-      // Preload the images
-      
-+      // Preload the images
- +      $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
- +    });
- +  </script>
- +</body>
- +</html>
-      $("<img>").attr("src", photo.src).load(function() { photo_layer.addLayer(marker); });
-    });
-	    new L.Control.GeoSearch({
-    provider: new L.GeoSearch.Provider.OpenStreetMap(),
-    position: 'topcenter',
-    showMarker: true
-}).addTo(map);
 	</script>
 </body>
 </html>
