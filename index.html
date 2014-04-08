@@ -10,6 +10,7 @@
 	<link type="text/css" rel="stylesheet" href="leaflet-openweathermap.css"/>
 	<script src="/src/js/l.control.geosearch.js"></script>
 	<script src="/src/js/l.geosearch.provider.openstreetmap.js"></script>
+	<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.0.1/leaflet-omnivore.min.js'></script>
 	<link rel="stylesheet" href="/src/css/l.geosearch.css" />
 	<style>
 		body {
@@ -74,12 +75,13 @@
 		}
 		map.on('locationfound', onLocationFound);
 		map.on('locationerror', onLocationError);
-
 		map.locate({setView: true, maxZoom: 14});
-		new L.Control.GeoSearch({
-            	   provider: new L.GeoSearch.Provider.OpenStreetMap()
-        	}).addTo(map);
-
+		var runLayer = omnivore.kml('/mapbox.js/assets/data/line.kml')
+    .on('ready', function() {
+        map.fitBounds(runLayer.getBounds());
+    })
+    .addTo(map);
+    
 	</script>
 </body>
 </html>
