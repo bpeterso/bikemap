@@ -76,7 +76,7 @@
 		map.on('locationfound', onLocationFound);
 		map.on('locationerror', onLocationError);
 		map.locate({setView: true, maxZoom: 14});
-		var runLayer = omnivore.kml('/mapbox.js/assets/data/line.kml')
+		var runLayer = omnivore.kml('/test.kml')
     .on('ready', function() {
         map.fitBounds(runLayer.getBounds());
     })
